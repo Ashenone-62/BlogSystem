@@ -1,0 +1,2 @@
+# BlogSystem
+基于express与ejs模板引擎搭建的博客系统，通过parse.js可以直接解析数据库中的md内容
