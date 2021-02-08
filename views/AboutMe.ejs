@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我</title>
+    <link rel='stylesheet' href='/stylesheets/AboutMe.css' />
+    <link rel="icon" href="/images/favicon.ico">
+</head>
+
+<body>
+    <div class="head" id="headBg">
+        <div class="headtop">
+            <div class="logo">
+                xx
+            </div>
+
+            <div class="headBtn">
+                <a href="/" class="nav-item" active-color="#d4237a"><img src="/images/homepage.png"
+                        alt="homepage">首页</a>
+                <a href="/passage" class="nav-item" active-color="#d4237a"><img src="/images/categories.png"
+                        alt="categories">文章</a>
+                <a href="/aboutMe" class="nav-item is-active" active-color="#d4237a"><img src="/images/aboutme.png"
+                        alt="aboutMe">关于我</a>
+                <a href="/SharePic" class="nav-item" active-color="#d4237a"><img src="/images/share.png" alt="share">分享</a>
+                <span class="nav-indicator"></span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="content">
+        <div class="myself">
+            <div class="contentHead">
+                <div class="circles">
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                </div>
+
+                <div class="title">站长信息</div>
+            </div>
+
+            <div class="myselfContent">
+                <div class="avatar">
+                    <img src="/images/avatar.png" alt="">
+                </div>
+
+                <div class="description">
+                    <h1>xx座右铭</h1>
+
+                    <div class="infos">
+                        <table>
+                            <tr>
+                                <td>Name：xx的名字</td>
+                                <td>Age：xx的年龄</td>
+                                <td>Gender：xx的性别</td>
+                                <td>Location：国-省-市</td>
+                                <td>GitHub：xx的GitHub地址</td>
+                                <td>Blog：xx的博客地址</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="skills">
+                    <div class="skill">
+                        <div class="number">
+                            <span>Java</span>
+                            <span class="percentage">35%</span>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <div class="number">
+                            <span>Vue</span>
+                            <span class="percentage">70%</span>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <div class="number">
+                            <span>Python</span>
+                            <span class="percentage">40%</span>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <div class="number">
+                            <span>MiniProgram</span>
+                            <span class="percentage">60%</span>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <div class="number">
+                            <span>Node</span>
+                            <span class="percentage">80%</span>
+                        </div>
+                    </div>
+                    <div class="skill">
+                        <div class="number">
+                            <span>React</span>
+                            <span class="percentage">70%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rewards">
+            <div class="contentHead">
+                <div class="circles">
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                </div>
+
+                <div class="title">展示柜</div>
+            </div>
+
+            <div class="displayCabinet">
+                <div class="player">
+                    <img src="/images/reward1.png" alt="">
+                    <span>xx的荣誉奖项</span>
+                </div>
+
+                <div class="player">
+                    <img src="/images/reward2.png" alt="">
+                    <span>xx的荣誉奖项</span> 
+                </div>
+            </div>
+        </div>
+
+        <div class="projects">
+            <div class="contentHead">
+                <div class="circles">
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                </div>
+
+                <div class="title">参与项目</div>
+            </div>
+
+            <div class="displayCabinet">
+                <div class="project">
+                    <img src="/images/cover.jpg" alt="">
+                    <div class="projectInfo">
+                        <div class="key infoStyle">
+                            <span>项目名：</span>
+                            <span>技术栈：</span>
+                            <span>项目规模：</span>
+                            <span>项目职位：</span>
+                            <span>工作量：</span>
+                        </div>
+
+                        <div class="value infoStyle">
+                            <span>xx的项目名</span>
+                            <span>xx的项目的技术栈</span>
+                            <span>xx的项目的人员规模</span>
+                            <span>xx在项目的任职职位</span>
+                            <span>xx在项目的工作占比</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="foot">
+        <div class="copyright">&copy;2020 By xx</div>
+        <div class="copyright">站长邮箱:xxxxxxxx@mail.com</div>
+      </div>
+</body>
+
+<script src="/javascripts/headBtnActive.js"></script>
+
+<script>
+    let circles = document.getElementsByClassName("circle");
+    let colors = ["#ff5d64", "#f9b958", "#33e44e","#ff5d64", "#f9b958", "#33e44e","#ff5d64", "#f9b958", "#33e44e"]
+
+    for (let i in circles) {
+        circles[i].style.backgroundColor = colors[i];
+    }
+</script>
+
+<script>
+    let skills = document.getElementsByClassName("number");
+    let numbers = document.getElementsByClassName("percentage");
+    let colorsArr = ["#ef494f", "#41b783", "#446785", "#f9c65f", "#66a063", "#72d2f3"];
+
+    let numbersArr = [];
+    for (let i in numbers) {
+        if (i < 6) {
+            let number = parseInt(numbers[i].textContent);
+            numbersArr.push(number)
+        }
+    }
+
+    for (let i in skills) {
+        if (i < 6) {
+            skills[i].style.width = numbersArr[i] + "%";
+            skills[i].style.backgroundColor = colorsArr[i];
+        }
+    }
+</script>
+
+</html>

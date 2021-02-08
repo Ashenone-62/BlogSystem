@@ -1,0 +1,35 @@
+@font-face {
+    font-family: coolBlack;
+    src: url(./151105.ttf);
+  }
+
+body{
+    margin: 0 20vw 0 15vw;
+    height:100vh;
+    font-family: coolBlack;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20vw;
+}
+
+.back{
+  animation: jump 1.5s infinite;
+}
+
+@keyframes jump{
+  0% {
+    top: 0;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+  }
+  50% {
+    opacity: 1;
+    filter: none;
+  }
+  100% {
+    top: 0;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+  }
+}

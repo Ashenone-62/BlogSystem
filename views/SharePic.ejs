@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>照片集</title>
+    <link rel='stylesheet' href='/stylesheets/SharePic.css' />
+    <link rel="icon" href="/images/favicon.ico">
+</head>
+
+<body>
+    <div class="head" id="headBg">
+        <div class="headtop">
+            <div class="logo">
+                xx
+            </div>
+
+            <div class="headBtn">
+                <a href="/" class="nav-item" active-color="#d4237a"><img src="/images/homepage.png"
+                        alt="homepage">首页</a>
+                <a href="/passage" class="nav-item" active-color="#d4237a"><img src="/images/categories.png"
+                        alt="categories">文章</a>
+                <a href="/aboutMe" class="nav-item" active-color="#d4237a"><img src="/images/aboutme.png"
+                        alt="aboutMe">关于我</a>
+                <a href="/SharePic" class="nav-item is-active" active-color="#d4237a"><img src="/images/share.png"
+                        alt="share">分享</a>
+                <span class="nav-indicator"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="content"></div>
+
+    <div class="foot">
+        <div class="copyright">&copy;2020 By xx</div>
+        <div class="copyright">站长邮箱:xxxxxxxx@mail.com</div>
+      </div>
+</body>
+
+
+<script src="/javascripts/headBtnActive.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+    const contentWidth = $('.content').width();
+    const columns = 4;
+    const margin = 20;
+    const imgWidth = (contentWidth - margin * (columns - 1)) / columns;
+    let imgColumnsData = []
+
+    render()
+
+    function render(getMoreImg, hasShow) {
+        let imgData = [];
+        let columnsInfo = [];
+        let firstLineShow = false;
+
+        if (getMoreImg != null && hasShow == true) {
+            firstLineShow = true;
+            for (let i in getMoreImg) {
+                var originSize = getMoreImg[i].size;
+                var [width, height] = originSize.split("*")
+
+                var obj = {
+                    sid: getMoreImg[i].sid,
+                    title: getMoreImg[i].title,
+                    url: getMoreImg[i].picUrl,
+                    date: getMoreImg[i].date,
+                    size: {
+                        width: width,
+                        height: height
+                    }
+                }
+                imgData.push(obj);
+            }
+
+        } else {
+            '<% for(let i in resultsPic){%>'
+            var originSize = '<%= resultsPic[i].size%>';
+            var [width, height] = originSize.split("*")
+
+            var obj = {
+                sid: '<%= resultsPic[i].sid%>',
+                title: '<%= resultsPic[i].title%>',
+                url: '<%= resultsPic[i].picUrl%>',
+                date: '<%= resultsPic[i].date%>',
+                size: {
+                    width: width,
+                    height: height
+                }
+            }
+            imgData.push(obj);
+            '<% }%>'
+        }
+
+        imgData.forEach((element, i) => {
+            let realWidthAndHeight = {
+                columnWidth: parseInt(element.size.width),
+                columnHeight: parseInt(element.size.height),
+                columnIndex: i
+            };
+
+            const imgHeight = imgWidth / realWidthAndHeight.columnWidth * realWidthAndHeight.columnHeight;
+
+            realWidthAndHeight.columnHeight = imgHeight + margin + 86;
+
+            if (element.sid >= 21) {
+                columnsInfo = imgColumnsData
+            }
+
+            if (i < columns && !firstLineShow) {
+                $('.content').append(`
+                        <div class="imgItem" style="width:${imgWidth}px;height:${imgHeight+86}px;left:${i * (imgWidth + margin)}px">
+                            <img id="image" src="${element.url}" alt="">
+                            <div class = "imgInfo">
+                                <div>${element.title}</div>
+                                <span>${element.date}</span>
+                            <div>
+                        </div>
+                    `);
+
+                columnsInfo.push(realWidthAndHeight);
+
+            } else {
+                firstLineShow = true;
+                const {
+                    columnWidth,
+                    columnHeight,
+                    columnIndex
+                } = columnsInfo.sort((left, right) =>
+                    left.columnHeight - right.columnHeight
+                )[0]
+
+                $('.content').append(`
+                        <div class="imgItem" style="width:${imgWidth}px;height:${imgHeight+86}px;left:${columnIndex * (imgWidth + margin)}px;top:${columnHeight}px;">
+                            <img id="image" src="${element.url}" alt="">
+                            <div class = "imgInfo">
+                                <div>${element.title}</div>
+                                <span>${element.date}</span>
+                            <div>
+                        </div>
+                    `);
+
+                columnsInfo[0].columnHeight += imgHeight + margin + 86;
+
+            }
+        });
+
+        imgColumnsData = columnsInfo;
+
+        preview()
+
+        $(".foot").css("top", columnsInfo[3].columnHeight + 200 + "px");
+    }
+
+    $(window).scroll(() => {
+
+        const pageHeight = $(document).height();
+        const currentWindowHeight = $(window).height();
+        const scrollTop = $(window).scrollTop();
+        const imgNumbers = $(".imgItem").length
+
+        if (pageHeight - currentWindowHeight - scrollTop <= 300) {
+            $.ajax({
+                url: "/SharePic",
+                type: "POST",
+                data: {
+                    currentImg: imgNumbers,
+                },
+                success: function (msg) {
+                    let getImgData = msg;
+                    let hasShow = true;
+                    render(getImgData, hasShow)
+                }
+            })
+        }
+    })
+
+    function preview() {
+        $('.imgItem').click((e) => {
+            let [width, height] = [e.currentTarget.firstElementChild.naturalWidth, e.currentTarget
+                .firstElementChild.naturalHeight
+            ]
+            let imgSrc = e.currentTarget.firstElementChild.attributes[1].value
+            if (width > height) {
+                $('body').append(`
+                <div class = "alert">
+                        
+                    <div class = "close">
+                            ×
+                    </div>
+
+                    <div class = "alertWindow">
+                        <div class = "preview" style="max-width: 60%;">
+                            <img  src="${imgSrc}" alt="">
+                        </div>
+                    </div>
+
+                </div>
+            `)
+            } else {
+                $('body').append(`
+            <div class = "alert">
+                <div class = "close">
+                        ×
+                </div>
+
+                <div class = "alertWindow">
+                    <div class = "preview" style="max-width: 35%;">
+                        <img  src="${imgSrc}" alt="">
+                    </div>
+                </div>
+            </div>
+            `)
+            }
+
+            $('.close').click(() => {
+                $('.alert').remove()
+            })
+        })
+    }
+</script>
+
+</html>

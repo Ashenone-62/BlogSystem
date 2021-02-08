@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= adminName %></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel='stylesheet' href='/stylesheets/HomePage.css' />
+  <link rel="icon" href="/images/favicon.ico">
+</head>
+
+<body>
+  <div class="head">
+    <div class="headtop">
+      <div class="logo">
+        <%= adminName %>
+      </div>
+
+      <div class="headBtn">
+        <a href="/" class="nav-item is-active" active-color="#fd0577"><img src="/images/homepage.png"
+            alt="homepage">首页</a>
+        <a href="/passage" class="nav-item" active-color="#fd0577"><img src="/images/categories.png" alt="categories">文章</a>
+        <a href="/aboutMe" class="nav-item" active-color="#fd0577"><img src="/images/aboutme.png" alt="aboutMe">关于我</a>
+        <a href="/SharePic" class="nav-item" active-color="#fd0577"><img src="/images/share.png" alt="share">分享</a>
+        <span class="nav-indicator"></span>
+      </div>
+    </div>
+
+    <div class="headContent">
+      <div class="headInfo">
+        <h1><%= adminName %>的博客</h1>
+        <span id="subtitle"></span>
+      </div>
+      <div class="icon">
+        <a href="/"><img src="/images/github.png" alt="github"></a>
+        &nbsp&nbsp
+        <a href="/"><img src="/images/email.png" alt="email"></a>
+      </div>
+    </div>
+
+    <div class="headFooter downArrow"><img src="/images/downArrow.png" alt=""></div>
+  </div>
+
+  <div class="content" id="content">
+    <!-- 循环选项卡 -->
+    <div class="left">
+      <% for(let i in resultsPassageItems){ %>
+
+      <div class="passageItem" id="passageItem">
+        <div class="coverImg"><img src="<%=resultsPassageItems[i].img  %>" alt="coverImg"></div>
+        <div class="passageInfo">
+          <!-- 中文最长长度20 -->
+          <a href="/passage/<%- resultsPassageItems[i].pid%>?<% for(let j in resultsPassageItems[i].tags){ %>tag=<%= resultsPassageItems[i].tags[j].tag%>&<%} %>"><span id="title"><%= resultsPassageItems[i].title  %></span></a>
+          <div class="followTitle">
+            <!-- 发布时间 -->
+            <span><%=resultsPassageItems[i].date  %></span>
+            |
+            <!-- 分类 -->
+            <% for(let j in resultsPassageItems[i].tags){ %>
+              
+            <span><%= resultsPassageItems[i].tags[j].tag%></span>
+
+            <%} %>
+          </div>
+          <!-- 简介 -->
+          <div class="simpleDescirption">
+
+              <%=resultsPassageItems[i].follow  %>
+            
+          </div>
+        </div>
+      </div>
+
+      <%} %>
+    </div>
+    <!-- 侧边信息栏 -->
+    <div class="right">
+      <div class="admin">
+        <div class="avatar"><img src="/images/avatar.png" alt="avatar"></div>
+        <div class="adminNav">
+          <div class="adminNavitem" id="passage">
+              <img src="/images/passage.png" alt="passage">
+              <div>文章</div>
+              <div><%=resultsPassageItems.length %></div>
+          </div>
+
+          <div class="adminNavitem" id="tags">
+              <img src="/images/tags.png" alt="tags">
+              <div>标签</div>
+              <div><%=resultsTagsLength.length %></div>
+          </div>
+
+          <div class="adminNavitem" id="projects">
+            <img src="/images/projects.png" alt="projects">
+            <div>项目</div>
+            <div>1</div>
+          </div>
+      </div>
+        <div class="icon">
+          <a href="/"><img src="/images/github.png" alt="github"></a>
+          &nbsp&nbsp
+          <a href="/"><img src="/images/email.png" alt="email"></a>
+        </div>
+      </div>
+      <div class="adminMsg">
+        <div class="msgTitle">
+          <img src="/images/adminMsg.png" alt="msgTitle">
+          <span>公告</span>
+        </div>
+        <div class="msgInfo">
+          <div>小站还在建设中，阿巴阿巴阿巴</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="copyright">&copy;2020 By xx</div>
+    <div class="copyright">站长邮箱:xxxxxxxx@mail.com</div>
+  </div>
+</body>
+
+<script src="/javascripts/headBtnActive.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.9"></script>
+
+<script>
+  let subtitleEffect = true
+  if (subtitleEffect) {
+    let typed = new Typed("#subtitle", {
+      strings: 'xx的座右铭,老铁们双击点个GitHub小星星'.split(","),
+      startDelay: 300,
+      typeSpeed: 150,
+      loop: false,
+      backSpeed: 50
+    })
+  } else {
+    document.getElementById("subtitle").innerHTML = 'xx的&#44;座右铭'
+  }
+</script>
+</html>

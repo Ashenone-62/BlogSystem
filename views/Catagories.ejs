@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章</title>
+    <link rel='stylesheet' href='/stylesheets/Categories.css' />
+    <link rel="icon" href="/images/favicon.ico">
+</head>
+
+<body>
+    <div class="head" id="headBg">
+
+        <div class="headtop">
+            <div class="logo">
+               xx
+            </div>
+
+            <div class="headBtn">
+                <a href="/" class="nav-item" active-color="#d4237a"><img src="/images/homepage.png"
+                        alt="homepage">首页</a>
+                <a href="/Catagories" class="nav-item is-active" active-color="#d4237a"><img src="/images/categories.png"
+                        alt="categories">文章</a>
+                <a href="/aboutMe" class="nav-item" active-color="#d4237a"><img src="/images/aboutme.png" alt="aboutMe">关于我</a>
+                <a href="/SharePic" class="nav-item" active-color="#d4237a"><img src="/images/share.png" alt="share">分享</a>
+                <span class="nav-indicator"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="left">
+            <div class="tags">
+                <h2>Tag</h2>
+                <div class="tagItems">
+                    <% for(let i = 0;i < resultsTags.length; i++){ %>
+                    <div class="tagItem"><%=resultsTags[i].tag  %></div>
+                    <%} %>
+                </div>
+            </div>
+
+            <% for(let i = 0;i < resultsPassageInfos.length; i++){ %>
+            <div class="passageItem" id="passageItem">
+                <div class="coverImg"><img src="<%=resultsPassageInfos[i].img  %>" alt="coverImg"></div>
+                <div class="passageInfo">
+                    <!-- 中文最长长度20 -->
+                    <a href="/passage/<%- resultsPassageInfos[i].pid%>?<% for(let j in resultsPassageInfos[i].tags){ %>tag=<%= resultsPassageInfos[i].tags[j].tag%>&<%} %>"">
+                        <span id="title">
+                            <%= resultsPassageInfos[i].title  %>
+                        </span>
+                    </a>
+
+                    <div class="followTitle">
+                        <!-- 发布时间 -->
+                        <span><%=resultsPassageInfos[i].date  %></span>
+                        |
+                        <!-- 分类 -->
+                        <% for(let j in resultsPassageInfos[i].tags){ %>
+              
+                            <span class = "tag"><%= resultsPassageInfos[i].tags[j].tag%></span>
+                
+                            <%} %>
+                    </div>
+                    <!-- 简介 -->
+                    <div class="simpleDescirption">
+                            <%=resultsPassageInfos[i].follow  %>
+                    </div>
+                </div>
+            </div>
+            <%} %>
+        </div>
+
+        <div class="right" id="right">
+            <div class="admin">
+                <div class="avatar"><img src="/images/avatar.png" alt="avatar"></div>
+                <div class="adminNav">
+                    <div class="adminNavitem" id="passage">
+                        <img src="/images/passage.png" alt="passage">
+                        <div>文章</div>
+                        <div><%= resultsPassageInfos.length %></div>
+                    </div>
+
+                    <div class="adminNavitem" id="tags">
+                        <img src="/images/tags.png" alt="tags">
+                        <div>标签</div>
+                        <div><%= resultsTags.length%></div>
+                    </div>
+
+                    <div class="adminNavitem" id="projects">
+                        <img src="/images/projects.png" alt="projects">
+                        <div>项目</div>
+                        <div>1</div>
+                    </div>
+                </div>
+                <div class="icon">
+                    <a href="/"><img src="/images/github.png" alt="github"></a>
+                    &nbsp&nbsp
+                    <a href="/"><img src="/images/email.png" alt="email"></a>
+                </div>
+            </div>
+            <div class="adminMsg">
+                <div class="msgTitle">
+                    <img src="/images/adminMsg.png" alt="msgTitle">
+                    <span>公告</span>
+                </div>
+                <div class="msgInfo">
+                    <div>小站还在建设中，阿巴阿巴阿巴</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+    <div class="foot">
+        <div class="copyright">&copy;2020 By xx</div>
+        <div class="copyright">站长邮箱:xxxxxxxx@mail.com</div>
+      </div>
+</body>
+
+<script src="/javascripts/headBtnActive.js"></script>
+
+<script>
+    function randomSize(){
+        let size = Math.random() + 1.2
+        return size;
+    }
+
+    let tagsArr = document.getElementsByClassName('tagItem');
+    for(let i in tagsArr){
+        tagsArr[i].style.fontSize = randomSize() + "rem";
+    }
+    
+</script>
+
+<script>
+    let pItems = document.querySelectorAll(".passageItem");
+
+    let tags = document.querySelectorAll(".tagItem");
+
+    let tagNode = document.querySelectorAll(".followTitle");
+    let tagNodeArrs = [];
+
+    tagNode.forEach(async (item,index) => {
+        let tagNodeArr = [];
+
+        if(item.childNodes.length >= 9 && item.childNodes.length <= 13){
+
+            let tagPosistion = item.childNodes.length;
+
+            if(item.childNodes[tagPosistion-6].className == "tag"){
+                tagNodeArr.push(item.childNodes[tagPosistion-6].innerHTML);
+            }
+            if(item.childNodes[tagPosistion-4].className == "tag"){
+                tagNodeArr.push(item.childNodes[tagPosistion-4].innerHTML);
+            }
+            if(item.childNodes[tagPosistion-2].className == "tag"){
+                tagNodeArr.push(item.childNodes[tagPosistion-2].innerHTML);
+            }
+        }
+
+        tagNodeArrs.push(tagNodeArr);
+    })
+
+    tags.forEach((item,index) => {
+        item.onclick = () => {
+
+            for(let i in tagNodeArrs){
+                
+                let isChecked = false;
+
+                for(let j in tagNodeArrs[i]){
+                    if(item.innerHTML == tagNodeArrs[i][j]){
+                        isChecked = true;
+                        pItems[i].style.display = "flex";
+                        break
+                    }
+                }
+
+                if(isChecked != true){
+                    pItems[i].style.display = "none";
+                }
+            }
+        }
+    })
+    
+
+</script>
+
+</html>

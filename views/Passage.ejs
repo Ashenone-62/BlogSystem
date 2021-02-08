@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%- results.title%></title>
+  <link rel="stylesheet" href="/stylesheets/prism.css">
+  <link rel='stylesheet' href='/stylesheets/Passage.css' />
+  <link rel="icon" href="/images/favicon.ico">
+</head>
+
+<body>
+  <div class="head" id="headBg">
+
+    <div class="headtop">
+      <div class="logo">
+        xx
+      </div>
+
+      <div class="headBtn">
+        <a href="/" class="nav-item" active-color="#d4237a"><img src="/images/homepage.png" alt="homepage">首页</a>
+        <a href="/passage" class="nav-item is-active" active-color="#d4237a"><img src="/images/categories.png"
+            alt="categories">文章</a>
+        <a href="/aboutMe" class="nav-item" active-color="#d4237a"><img src="/images/aboutme.png" alt="aboutMe">关于我</a>
+        <a href="/SharePic" class="nav-item" active-color="#d4237a"><img src="/images/share.png" alt="share">分享</a>
+        <span class="nav-indicator"></span>
+      </div>
+    </div>
+
+    <div class="passageInfo">
+      <div class="title"><%- results.title%></div>
+      <div class="info">
+        <div class="time">发布时间：<%- results.date%></div>
+        <div class="length">总字数：<%- results.content.length%>字</div>
+        <div class="tags">标签：<% for(let i in tags){ %> <span><%- tags[i]%></span> <%} %></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content" id="content">
+    <div id="passageContent" class="left passageContent">
+      <%- results.content%>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="copyright">&copy;2020 By xx</div>
+    <div class="copyright">站长邮箱:xxxxxxxx@mail.com</div>
+  </div>
+
+</body>
+
+<script src="/javascripts/prism.js"></script>
+<script src="/javascripts/headBtnActive.js"></script>
+
+<script>
+  document.getElementById('headBg').style.background = "url(<%= results.img%>) no-repeat"
+  document.getElementById('headBg').style.backgroundSize = "cover";
+  document.getElementById('headBg').style.backgroundPosition = "center center"
+</script>
+
+</html>
